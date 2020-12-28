@@ -1,0 +1,3 @@
+rule trim:
+    input:
+        ""

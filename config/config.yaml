@@ -1,0 +1,3 @@
+output_dir: /home/rx32940/snakemake_assembly_workdir/
+samples:
+  SAMEA104369441: ERR2192021
