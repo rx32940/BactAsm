@@ -2,10 +2,11 @@ import os
 configfile: "config/config.yaml"
 
 output_dir = config["output_dir"]
-subworkflowdir = "rules/"
+subworkflowdir = config["subworkflow"]
+output_dir = config["output_dir"] + "raw/"
 
 include: subworkflowdir + "raw.smk"
 
 rule all:
     input: 
-        output_dir + "raw/multiqc_report.html"
+        output_dir + "multiqc_report.html"
