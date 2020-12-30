@@ -1,12 +1,26 @@
 import os
 configfile: "config/config.yaml"
 
-output_dir = config["output_dir"]
+SAMPLES = config["samples"]
+
+output_dir_general = config["output_dir"]
 subworkflowdir = config["subworkflow"]
+
 output_dir = config["output_dir"] + "raw/"
+output_dir_trim = config["output_dir"] + "trim/"
+output_dir_asm = config["output_dir"] + "asm/"
+output_dir_log = config["output_dir"] + "log/"
+
 
 include: subworkflowdir + "raw.smk"
+include: subworkflowdir + "trim.smk"
+include: subworkflowdir + "asm.smk"
 
 rule all:
     input: 
-        output_dir + "multiqc_report.html"
+        # QC before trimming
+        output_dir + "multiqc_report.html",
+        # QC after trimming
+        output_dir_trim + "multiqc_report.html",
+        # check de novo asm qualities
+        output_dir_asm + "quast_asm.html"

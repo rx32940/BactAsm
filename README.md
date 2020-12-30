@@ -21,7 +21,22 @@ https://github.com/jlanga/smsk
 
 ## Rules:
    
-   ### Rule 1: raw.smk
+### Rule 1: raw.smk
+
     1) download fastq files from NCBI with samples provided in the config file
     2) fastqc all the raw reads files
     3) combine fastqc with multiqc
+
+### Rule 2: trim.smk
+
+    1) trim raw reads with trimmomatic using trimmer: 
+    ```ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36```
+    2) fastqc paired trimmed reads again
+    3) aggregate fastqc reports with multiqc
+
+### Rule 3: asm.smk
+    1) use spades for de novo assemble ```outputdir/asm```
+    2) use quast w/o reference genome for de novo assemblies assessments
+    3) aggregate assessments with multiqc
+
+

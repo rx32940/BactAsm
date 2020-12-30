@@ -1,0 +1,4 @@
+channel:
+  - bioconda
+dependencies:
+  - spades = 3.14.1

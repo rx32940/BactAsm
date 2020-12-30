@@ -1,0 +1,4 @@
+channel:
+  - bioconda
+dependencies:
+  - quast = 5.0.2
