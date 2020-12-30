@@ -9,13 +9,13 @@ rule trim:
         right_unpaired= output_dir_trim + "unpair/{sample}_2_unpaired_trimmed.fastq.gz"
     conda:
         "../env/trimmomatic.yaml"
-    threads: 12
+    threads: THREADS
     params:
         pe="PE",
-        trimmer="ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
+        trimmer="ILLUMINACLIP:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
     shell:
         """
-        trimmomatic {params.pe} -threads 12 {input.left} {input.right} \
+        trimmomatic {params.pe} -threads {threads} {input.left} {input.right} \
         {output.left_paired} {output.left_unpaired} \
         {output.right_paired} {output.right_unpaired} \
         {params.trimmer}

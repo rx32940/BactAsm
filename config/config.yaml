@@ -1,5 +1,9 @@
 output_dir: /home/rx32940/snakemake_assembly_workdir/
 subworkflow: rules/
+threads_num: 12
+kingdom: Bacteria
+genus: Leptospira
+reference: /home/rx32940/snakemake_assembly_workdir/GCF_000092565.1_ASM9256v1_genomic.fna
 samples:
   SAMEA104369441: ERR2192021
-  SAMEA864136: ERR025972
+  

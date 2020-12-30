@@ -2,7 +2,7 @@ rule fastq_dump:
     output: 
         output_dir + "SRA/{sample}_1.fastq.gz",
         output_dir + "SRA/{sample}_2.fastq.gz"
-    threads: 6
+    threads: THREADS
     conda:
         "../env/sra-tools.yaml"
     params:

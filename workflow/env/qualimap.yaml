@@ -1,0 +1,4 @@
+channel:
+  - bioconda
+dependencies:
+  - qualimap = 2.2.2a

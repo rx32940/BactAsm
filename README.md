@@ -30,13 +30,25 @@ https://github.com/jlanga/smsk
 ### Rule 2: trim.smk
 
     1) trim raw reads with trimmomatic using trimmer: 
-    ```ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36```
+    ```ILLUMINACLIP:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 
+    MINLEN:36```
     2) fastqc paired trimmed reads again
     3) aggregate fastqc reports with multiqc
 
 ### Rule 3: asm.smk
-    1) use spades for de novo assemble ```outputdir/asm```
+
+    1) use SPAdes for de novo assemble ```outputdir/asm```
     2) use quast w/o reference genome for de novo assemblies assessments
     3) aggregate assessments with multiqc
+
+### Rule 4: annotate.smk
+    
+    1) use PROKKA for genome annotation
+
+---
+
+## To run on UGA Sapelo2 Cluster
+
+```sbatch submit_sapelo2.sh```
 
 

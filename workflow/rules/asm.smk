@@ -9,7 +9,7 @@ rule spades:
     params:
         post_process="--careful --mismatch-correction",
         output_dir=output_dir_asm
-    threads: 12
+    threads: THREADS
     shell:
         """
         spades.py --pe1-1 {input.left} \
@@ -24,14 +24,14 @@ rule quast_denovo:
         output_dir_asm + "denovo/{sample}/scaffolds.fasta"
     output:
         output_dir_asm + "quast/{sample}/report.tsv"
-    threads: 12
+    threads: THREADS
     conda:
         "../env/quast.yaml"
     params:
         output_dir=output_dir_asm
     shell:
         """
-        quast {input} -o {output} -t {threads}
+        quast {input} -o {params.output_dir}/{wildcards.sample} -t {threads}
         """
 
 rule multiqc_quast:
