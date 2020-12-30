@@ -21,6 +21,7 @@ All the output files will be assessed by **1) fastqc, 2) QUAST, 3) Qualimap**
     4) add expected output dir to config.yaml
     5) add directory to the reference genome to the config file if available
     6) refer to the examples in the config file for exact instruction
+    7) modify the maximum allowance of threads in config.yaml
 
 ---
 # Working locally
