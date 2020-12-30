@@ -13,7 +13,7 @@ if reference:
         shell:
             """
             bwa index {params.ref}
-            bwa mem -t {threads} {params.ref} {input.left} {input.right} 
+            bwa mem -t {threads} {params.ref} {input.left} {input.right} > {output}
             """
     
     rule samtools_sort:
