@@ -12,7 +12,7 @@ rule trim:
     threads: THREADS
     params:
         pe="PE",
-        trimmer="ILLUMINACLIP:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
+        trimmer="ILLUMINACLIP:resources/adapters/TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 MINLEN:36"
     shell:
         """
         trimmomatic {params.pe} -threads {threads} {input.left} {input.right} \
