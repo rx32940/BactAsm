@@ -35,5 +35,5 @@ rule all:
         # annotate de novo asm
         expand([output_dir_prokka + "{sample}/{sample}.gff"], sample= SAMPLES), 
         # map if reference exist
-        # map = output_dir_map + "qualimap_cov_multiqc.html" if reference else output_dir_map + "no_reference.log"
+        map = output_dir_map + "multiqc_cov/qualimap_cov_multiqc.html" if reference else output_dir_map + "no_reference.log"
 

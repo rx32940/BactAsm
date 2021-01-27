@@ -4,7 +4,7 @@ if reference:
             left=output_dir_trim + "pair/{sample}_1_paired_trimmed.fastq.gz",
             right=output_dir_trim + "pair/{sample}_2_paired_trimmed.fastq.gz"
         output:
-            output_dir_map + "sam/{sample}.sam"
+            output_dir_map + "sorted_bam/{sample}.sorted.bam"
         conda:
             "../env/bwa.yaml"
         threads: THREADS
@@ -13,26 +13,12 @@ if reference:
         shell:
             """
             bwa index {params.ref}
-            bwa mem -t {threads} {params.ref} {input.left} {input.right} > {output}
-            """
-    
-    rule samtools_sort:
-        input:
-            output_dir_map + "sam/{sample}.sam"
-        output:
-            output_dir_map + "sorted_bam/{sample}.bam"
-        params:
-            output_dir = output_dir_map
-        conda:
-            "../env/samtools.yaml"
-        shell:
-            """
-            samtools view -Sb {input} | samtools sort -T {params.output_dir}sorted_bam/{wildcards.sample} -O bam {input} > {output}
+            bwa mem -t {threads} {params.ref} {input.left} {input.right} | samtools sort -o {output} -
             """
 
     rule qualimap:
         input:
-            output_dir_map + "sorted_bam/{sample}.bam"
+            output_dir_map + "sorted_bam/{sample}.sorted.bam"
         output:
             directory(output_dir_map + "qualimap/{sample}")
         conda:
@@ -47,7 +33,7 @@ if reference:
         input:
             expand(output_dir_map + "qualimap/{sample}", sample=SAMPLES)
         output:
-            output_dir_map + "qualimap_cov_multiqc.html"
+            output_dir_map + "multiqc_cov/qualimap_cov_multiqc.html"
         conda:
             "../env/multiqc.yaml"
         params:

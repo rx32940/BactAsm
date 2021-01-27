@@ -5,4 +5,4 @@ kingdom: Bacteria
 genus: Leptospira
 reference: /home/rx32940/snakemake_assembly_workdir/GCF_000092565.1_ASM9256v1_genomic.fna
 samples:
-  SAMN16925409: SRR13255634
+  SAMN09521106: SRR7470977

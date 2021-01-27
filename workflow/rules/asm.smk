@@ -31,7 +31,7 @@ rule quast_denovo:
         output_dir=output_dir_asm
     shell:
         """
-        quast {input} -o {params.output_dir}/{wildcards.sample} -t {threads}
+        quast {input} -o {params.output_dir}/quast/{wildcards.sample} -t {threads}
         """
 
 rule multiqc_quast:
@@ -45,6 +45,6 @@ rule multiqc_quast:
         output_dir=output_dir_asm
     shell:
         """
-        multiqc {input.report} -d -dd 1 -o {params.output_dir} -n quast_asm
+        multiqc {input.report} -d -dd 1 -o {params.output_dir} -n multiqc_quast
         """
 
