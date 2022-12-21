@@ -1,10 +1,10 @@
 # BactAsm
 
-This snakemake pipeline allows direct download from NCBI's SRA database with fastq-dump
+This worflow allows direct download from NCBI's SRA database with fastq-dump
 
 The pipeline handles raw reads records of the bacterial genome from **SRA Accessions** to **Annotated _de novo_ Assemblies**
 
-If reference genome is provided, short reads will be mapped to the reference genome with **BWA Mem**
+If reference genome is provided, short reads will be mapped to the reference genome with **BWA Mem** and will perform variant-calling.
 
 All the output files will be assessed by **1) fastqc, 2) QUAST, 3) Qualimap**
 
