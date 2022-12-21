@@ -1,4 +1,4 @@
-# Bacterial_Genome_Assembly_Pipeline
+# BactAsm
 
 This snakemake pipeline allows direct download from NCBI's SRA database with fastq-dump
 
