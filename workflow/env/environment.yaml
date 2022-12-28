@@ -2,8 +2,5 @@ channels:
   - bioconda
   - conda-forge
 dependencies:
-  - snakemake-minimal >=5.24.1
-  - jinja2 =2.11
-  - networkx =2.5
-  - matplotlib =3.3
-  - graphviz =2.42
+  - snakemake = 7.18.1
+  - mamba = 1.0.0

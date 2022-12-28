@@ -1,4 +1,4 @@
-channel:
+channels:
   - bioconda
 dependencies:
-  - prokka >= 1.14
+  - prokka = 1.14.6

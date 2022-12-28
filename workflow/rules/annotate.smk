@@ -1,8 +1,8 @@
 rule prokka:
     input:
-        output_dir_asm + "denovo/{sample}/scaffolds.fasta"
+        final=rules.spades.output
     output:
-        output_dir_prokka + "{sample}/{sample}.gff"
+        os.path.join(output_dir_prokka ,"{sample}", "{sample}.gff")
     conda:
         "../env/prokka.yaml"
     params:
@@ -11,8 +11,12 @@ rule prokka:
         output_dir = output_dir_prokka
     shell:
         """
+        sed -re 's/(_length)[^=]*$/\1/' {input.final} > {params.output_dir}{wildcards.sample}.fasta
+
         prokka -kingdom {params.kingdom} -genus {params.genus} \
         -outdir {params.output_dir}{wildcards.sample} \
         -prefix {wildcards.sample} \
-        {input} --force
+        {params.output_dir}{wildcards.sample}.fasta --force
+
+        rm {params.output_dir}{wildcards.sample}.fasta
         """

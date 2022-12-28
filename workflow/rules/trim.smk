@@ -4,21 +4,16 @@ rule trim:
         right= output_dir + "SRA/{sample}_2.fastq.gz"
     output:
         left_paired = output_dir_trim + "pair/{sample}_1_paired_trimmed.fastq.gz",
-        right_paired = output_dir_trim + "pair/{sample}_2_paired_trimmed.fastq.gz",
-        left_unpaired= output_dir_trim + "unpair/{sample}_1_unpaired_trimmed.fastq.gz",
-        right_unpaired= output_dir_trim + "unpair/{sample}_2_unpaired_trimmed.fastq.gz"
+        right_paired = output_dir_trim + "pair/{sample}_2_paired_trimmed.fastq.gz"
     conda:
-        "../env/trimmomatic.yaml"
+        "../env/fastp.yaml"
     threads: THREADS
     params:
-        pe="PE",
-        trimmer="ILLUMINACLIP:resources/adapters/TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36"
+        pe="-c"
     shell:
         """
-        trimmomatic {params.pe} -threads {threads} {input.left} {input.right} \
-        {output.left_paired} {output.left_unpaired} \
-        {output.right_paired} {output.right_unpaired} \
-        {params.trimmer}
+        fastp {params.pe} --thread {threads} --in1 {input.left} --in2 {input.right} \
+        --out1 {output.left_paired} --out2 {output.right_paired}
         """
 
 rule fastqc_after_trim:

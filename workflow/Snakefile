@@ -8,12 +8,12 @@ THREADS = config["threads_num"]
 output_dir_general = config["output_dir"]
 subworkflowdir = config["subworkflow"]
 
-output_dir = config["output_dir"] + "raw/"
-output_dir_trim = config["output_dir"] + "trim/"
-output_dir_asm = config["output_dir"] + "asm/"
-output_dir_log = config["output_dir"] + "log/"
-output_dir_prokka = config["output_dir"] + "prokka/"
-output_dir_map = config["output_dir"] + "map/"
+output_dir = os.path.join(config["output_dir"], "raw/")
+output_dir_trim = os.path.join(config["output_dir"],"trim/")
+output_dir_asm = os.path.join(config["output_dir"], "asm/")
+output_dir_log = os.path.join(config["output_dir"], "log/")
+output_dir_prokka = os.path.join(config["output_dir"], "asm_anot/")
+output_dir_map = os.path.join(config["output_dir"], "snps/")
 
 reference = config["reference"]
 
@@ -22,7 +22,7 @@ include: subworkflowdir + "raw.smk"
 include: subworkflowdir + "trim.smk"
 include: subworkflowdir + "asm.smk"
 include: subworkflowdir + "annotate.smk"
-include: subworkflowdir + "map.smk"
+include: subworkflowdir + "snp.smk"
 
 rule all:
     input: 
@@ -31,9 +31,9 @@ rule all:
         # QC after trimming
         output_dir_trim + "multiqc_report.html",
         # check de novo asm qualities
-        output_dir_asm + "quast_asm.html",
+        output_dir_asm + "multiqc_quast.html",
         # annotate de novo asm
-        expand([output_dir_prokka + "{sample}/{sample}.gff"], sample= SAMPLES), 
+        expand([os.path.join(output_dir_prokka ,"{sample}", "{sample}.gff")], sample= SAMPLES), 
         # map if reference exist
-        map = output_dir_map + "multiqc_cov/qualimap_cov_multiqc.html" if reference else output_dir_map + "no_reference.log"
+        map = os.path.join(output_dir_map , "coreSNPs","clean.full.aln") if reference else output_dir_map + "no_reference.log"
 

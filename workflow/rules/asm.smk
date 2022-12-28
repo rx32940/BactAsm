@@ -8,7 +8,7 @@ rule spades:
         "../env/spades.yaml"
     params:
         post_process="--careful --mismatch-correction",
-        output_dir=output_dir_asm
+        asm_out=output_dir_asm
     threads: THREADS
     shell:
         """
@@ -16,29 +16,30 @@ rule spades:
         --pe1-2 {input.right} \
         -t {threads} \
         {params.post_process} \
-        -o {params.output_dir}/denovo/{wildcards.sample}
+        -o {params.asm_out}/denovo/{wildcards.sample}
         """
 
 rule quast_denovo:
     input:
-        output_dir_asm + "denovo/{sample}/scaffolds.fasta"
+        final=rules.spades.output
     output:
         output_dir_asm + "quast/{sample}/report.tsv"
     threads: THREADS
     conda:
         "../env/quast.yaml"
     params:
+        reference=" -R " + reference if reference != '' else ' ',
         output_dir=output_dir_asm
     shell:
         """
-        quast {input} -o {params.output_dir}/quast/{wildcards.sample} -t {threads}
+        quast{params.reference} {input.final} -o {params.output_dir}/quast/{wildcards.sample} -t {threads}
         """
 
 rule multiqc_quast:
     input:
         report= expand([output_dir_asm + "quast/{sample}/report.tsv"], sample=config["samples"])
     output:
-        output_dir_asm + "quast_asm.html"
+        output_dir_asm + "multiqc_quast.html"
     conda:
         "../env/multiqc.yaml"
     params:

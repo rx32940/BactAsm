@@ -1,0 +1,8 @@
+Kingdom: Bacteria
+genus: Leptospira
+output_dir: /scratch/rx32940/whole_genome/data/pipeline_out/
+reference: ''
+samples:
+  SRR7470977: SRR7470977
+subworkflow: rules/
+threads_num: 3

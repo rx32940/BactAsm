@@ -1,12 +1,12 @@
-# BactAsm
+# Bacterial_Genome_Assembly_Pipeline
 
-This worflow allows direct download from NCBI's SRA database with fastq-dump
+This snakemake pipeline allows direct download from NCBI's SRA database with fastq-dump
 
 The pipeline handles raw reads records of the bacterial genome from **SRA Accessions** to **Annotated _de novo_ Assemblies**
 
-If reference genome is provided, short reads will be mapped to the reference genome with **BWA Mem** and will perform variant-calling.
+**Variant calling** will also be performed after mapped to the reference genomes provided. **Core SNPs** called from regions shared by all input sequences will be produced at the end of the pipline.
 
-All the output files will be assessed by **1) fastqc, 2) QUAST, 3) Qualimap**
+All the output files will be assessed by **1) fastqc, 2) QUAST**
 
 
 ## Requirement
@@ -14,6 +14,27 @@ All the output files will be assessed by **1) fastqc, 2) QUAST, 3) Qualimap**
     - create working directory
 
 ## How to use:
+
+### use with command line:
+    ```
+    python BactAsm.py -h
+        usage: BactAsm.py [-h] [-s] [-b] [-l] [-f] [-o] [-t] [-k] [-g] [-c]
+
+        Fetch SRA records from NCBI and perform de novo assemble & read alignments to reference genome
+
+        optional arguments:
+        -h, --help        show this help message and exit
+        -s , --sra        SRA accession ID you would like to download
+        -b , --sampleID   sampleID of the sample (this can be same as the SRA ID)
+        -l , --list       input list (provide each sample' SampleID and sraID in a row, separated by TAB)
+        -f , --ref        reference genome (required)
+        -o , --output     output directory
+        -t , --thread     number of threads to use
+        -k , --kingdom    which kingdom the genome is from, default is Bacteria
+        -g , --genus      which genus the genome is from, default is Leptospira
+    ```
+
+### use by modifying config files
 
     1) modify config file
     2) Add the Bacterial genus of interst to config.yaml
@@ -30,7 +51,7 @@ All the output files will be assessed by **1) fastqc, 2) QUAST, 3) Qualimap**
     1) create environmental.yaml file
         - create conda env for snakemake
         - add dependencies for plotting
-    2) conda env create --name Bacterial_Genome_Assembly_Pipeline --file env/environment.yaml
+    2) conda env env create -n BactAsm --file env/environment.yaml python=3.7
     3) update env: conda env update -f env/environment.yaml
 
 ## STEP 2: Specify Rules in Snakefile
@@ -60,9 +81,7 @@ https://github.com/jlanga/smsk
 
 ### Rule 2: trim.smk
 
-    1) trim raw reads with trimmomatic using trimmer: 
-    ```ILLUMINACLIP:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 
-    MINLEN:36```
+    1) trim raw reads with fastp
     2) fastqc paired trimmed reads again
     3) aggregate fastqc reports with multiqc
 
@@ -76,16 +95,12 @@ https://github.com/jlanga/smsk
     
     1) use PROKKA for genome annotation
 
-### Rule 5: map.smk
+### Rule 5: snp.smk
 
-    1) use bwa mem to map **trimmed** short reads to the reference genome if provided
+    1) use [Snippy](https://github.com/tseemann/snippy) to call variant from the reference genome provided
         (no need to index the reference genome)
-    2) use qualimap to assess the mapped alignments
-    3) aggregate the assessments with multiqc
+    3) aggregate variants for core SNPs detection
 
-**To DO**
 
-- [ ] fix cluster.json to attribute resources for each function
-- [ ] Test if without reference works
     
 
