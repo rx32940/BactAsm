@@ -18,23 +18,24 @@ All the output files will be assessed by **1) fastqc, 2) QUAST**
 ## How to use:
 
 ### use with command line:
-    ```
-    python BactAsm.py -h
-        usage: BactAsm.py [-h] [-s] [-b] [-l] [-f] [-o] [-t] [-k] [-g] [-c]
 
-        Fetch SRA records from NCBI and perform de novo assemble & read alignments to reference genome
+```
+python BactAsm.py -h
+    usage: BactAsm.py [-h] [-s] [-b] [-l] [-f] [-o] [-t] [-k] [-g] [-c]
 
-        optional arguments:
-        -h, --help        show this help message and exit
-        -s , --sra        SRA accession ID you would like to download
-        -b , --sampleID   sampleID of the sample (this can be same as the SRA ID)
-        -l , --list       input list (provide each sample' SampleID and sraID in a row, separated by TAB)
-        -f , --ref        reference genome (required)
-        -o , --output     output directory
-        -t , --thread     number of threads to use
-        -k , --kingdom    which kingdom the genome is from, default is Bacteria
-        -g , --genus      which genus the genome is from, default is Leptospira
-    ```
+    Fetch SRA records from NCBI and perform de novo assemble & read alignments to reference genome
+
+    optional arguments:
+    -h, --help        show this help message and exit
+    -s , --sra        SRA accession ID you would like to download
+    -b , --sampleID   sampleID of the sample (this can be same as the SRA ID)
+    -l , --list       input list (provide each sample' SampleID and sraID in a row, separated by TAB)
+    -f , --ref        reference genome (required)
+    -o , --output     output directory
+    -t , --thread     number of threads to use
+    -k , --kingdom    which kingdom the genome is from, default is Bacteria
+    -g , --genus      which genus the genome is from, default is Leptospira
+```
 
 ### use by modifying config files
 
