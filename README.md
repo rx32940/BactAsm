@@ -10,6 +10,9 @@ The pipeline handles raw reads records of the bacterial genome from **SRA Access
 
 All the output files will be assessed by **1) fastqc, 2) QUAST**
 
+## Sample workflow:
+![dag](https://user-images.githubusercontent.com/31255012/209852338-0fbaee48-48b8-442d-b71e-98a965337e91.svg)
+
 
 ## Requirement
     - install miniconda 3
